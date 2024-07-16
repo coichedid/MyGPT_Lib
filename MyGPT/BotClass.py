@@ -1,8 +1,10 @@
 import time
+import json
 from termcolor import colored
 
 from MyGPT import auxiliar_functions as af
 from MyGPT import MyGPTClass
+from MyGPT import gpt_constants as c
 
 class Bot:
     def __init__(self, bot_name='Tião') -> None:
@@ -86,11 +88,35 @@ class Bot:
                         },
                     },
                 }
+            },
+            'get_capabilities': {
+                'func': self.get_capabilities,
+                'registration_info': {
+                    "type": "function",
+                    "function": {
+                        "name": "get_capabilities",
+                        "description": "Get a list of current custom capabilities of this bot",
+                        "parameters": {},
+                    },
+                }
             }
         }
         # Register all available tools with the GPT instance
         for available_tool_name in self.__available_tools:
             self.gpt.add_tool(available_tool_name, self.__available_tools[available_tool_name])
+    
+    def get_capabilities(self):
+        af.print_warn(f"Redirecionando para a função")
+        l = [{'name': v['registration_info']['function']['name'], 
+            'description': v['registration_info']['function']['description'],
+            'type': 'tool',}for k,v in self.__available_tools.items()]
+        l.append({
+            'name': c.CODE_ASSISTANT_NAME,
+            'description': c.CODE_ASSISTANT_INSTRUCTIONS,
+            'type': 'assistant'
+        })
+        capabilities = {'capabilities': l}
+        return json.dumps(capabilities)
             
     def talk_to_me(self, content):
         """

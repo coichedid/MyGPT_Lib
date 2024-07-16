@@ -187,6 +187,8 @@ class MyGPT:
         Returns:
             str: Description of the image.
         """
+        if not path.startswith('data:image') and not path.startswith('http'):
+            return ''
         params = {
             'messages': [{
                     'role': 'user',
