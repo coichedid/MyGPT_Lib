@@ -21,7 +21,17 @@ pip install MyGPT_Lib
 
 To use MyGPT_Lib, start by initializing a bot instance with a user-defined name. Interactions with the bot can cover a variety of tasks, such as image recognition, stock price queries, solving math problems, and general conversation.
 
-### Example Interactions
+```python
+from MyGPT import BotClass
+
+bot = BotClass.Bot(bot_name='Tião')
+bot.run_chat()
+# act interactivly with prompt
+```
+
+### Example of Code Interactions
+
+Those samples shows how to interact directly to bot class. Instead, those questions and requests can be suplied in the interactive prompt.
 
 1. **Tool and Assistant Capabilities:**
    ```python
